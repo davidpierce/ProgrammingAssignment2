@@ -1,11 +1,36 @@
-## Put comments here that give an overall description of what your
-## functions do
+## cachematrix.R
+##
+## Description
+##
+## This file provides an object for holding a matrix along with the
+## cached value of its inverse.  (These two items are stored together
+## within a function closure.)
+##
+## Usage
+##
+##     cm <- makeCacheMatrix(matrix(rnorm(9), 3, 3))
+##     cm$get()
+##     cacheSolve(cm)
+##     cm$getinverse()
+##
 
-## Write a short comment describing this function
-
+## makeCacheMatrix
+##
+## Description
+##
+## Creates a matrix object which caches its inverse upon a call to
+## cacheSolve.
+##
+## Usage
+##
+##     cm <- makeCacheMatrix(matrix(rnorm(9), 3, 3))
+##     cm$get()
+##     cm$set(m)
+##     cm$setinverse(i)
+##     cm$getinverse()
+##
 makeCacheMatrix <- function(x = matrix()) {
-    # the cached inverse of x
-    i <- NULL
+    i <- NULL # the cached inverse of x
     set <- function(y) {
         x <<- y
         i <<- NULL
@@ -18,10 +43,20 @@ makeCacheMatrix <- function(x = matrix()) {
          getinverse = getinverse)
 }
 
-## Write a short comment describing this function
-
+## cacheSolve
+##
+## Description
+##
+## Solves for the inverse of a cached matrix.  If the inverse is
+## already cached, it is returned.  Otherwise the inverse is computed,
+## cached, and returned.
+##
+## Usage
+##
+##     cacheSolve(cm)
+##     cm$getinverse()
+##
 cacheSolve <- function(x, ...) {
-    ## Return a matrix that is the inverse of 'x'
     i <- x$getinverse()
     if(!is.null(i)) {
         message("getting cached data")
